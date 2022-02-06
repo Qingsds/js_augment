@@ -1,0 +1,121 @@
+<!-- <script>
+  var a = 1;
+  var obj = {
+    a: 2,
+    // 声明位置
+    showA: () => {
+      console.log(this.a);
+    },
+  };
+  // 调用位置
+  obj.showA(); // 1
+</script> -->
+
+<!-- <script>
+  function Person(name) {
+    this.name = name;
+    console.log(this);
+  }
+
+  let person = new Person("qingsds"); // Person {name: 'qingsds'}
+</script> -->
+
+<script>
+  /**
+   * 模拟call方法
+   */
+  function getGlobalObject() {
+    return this;
+  }
+
+  Function.prototype.myCall = function call(thisArg) {
+    // this 不是函数,直接报错
+    if (typeof this !== "function") {
+      return new TypeError(`${this} is not a function`);
+    }
+    // 参数是null或者undefined,替换为全局对象
+    if (thisArg === null || thisArg === undefined) {
+      thisArgs = getGlobalObject();
+    }
+    let argsArray = [].slice.call(arguments, 1);
+    // 将thisArg包装为对象
+    thisArg = new Object(thisArg);
+    let __fn = new Date().getTime();
+    thisArg[__fn] = this;
+    let result = thisArg[__fn](...argsArray);
+    delete thisArg[__fn];
+    return result;
+  };
+
+  function foo() {
+    console.log(this.name);
+    console.log(...arguments);
+  }
+  var a = { name: "string" };
+  foo.myCall(a, 1, 2, 3, 45);
+</script>
+
+<script>
+  function getGlobalObject() {
+    return this;
+  }
+  Function.prototype.myApply = function apply(thisArg, argsArray) {
+    // 判断this是否是函数类型
+    if (typeof this !== "function") {
+      return new TypeError(this + "is not a function");
+    }
+    // 参数是null或者undefined,替换为全局对象
+    if (thisArg === null || thisArg === undefined) {
+      thisArg = getGlobalObject();
+    }
+    // 判断argsArray是否为null或undefined
+    if (argsArray === null || argsArray === undefined) {
+      argsArray = [];
+    }
+    if (argsArray !== new Object(argsArray)) {
+      return new TypeError(argsArray + "is not Array");
+    }
+    thisArg = new Object(thisArg);
+    let __fn = new Date().getTime();
+    thisArg[__fn] = this;
+    let result = thisArg[__fn](...argsArray);
+    delete thisArg[__fn];
+    return result;
+  };
+</script>
+
+<!-- <script>
+  Function.prototype.myBind = function bind(thisArg) {
+    if (typeof this !== "function") {
+      return new TypeError(this + "is not a function");
+    }
+    //  缓存this
+    const self = this;
+    // 截取参数
+    const bindArgs = Array.from(arguments).slice(1);
+    // 定义要返回的bound函数
+    const bound = function () {
+      // 注意:返回的函数仍然能够接收参数
+      const boundArgs = [...arguments];
+      const finalArgs = bindArgs.concat(boundArgs);
+      // 判断是否被new调用
+      if (typeof new.target !== "undefined") {
+        // 判断self是否是箭头函数,如果是箭头函数就没有prototype,没必要再做指向prototype的操作
+        if (self.prototype) {
+          bound.prototype = Object.create(self.prototype);
+        }
+        // 调用原函数 判断返回值
+        const result = self.apply(this, finalArgs);
+        const isFunc = typeof result === "function";
+        const isObject = typeof result === "object" && result !== null;
+        if (isFunc || isObject) {
+          return result;
+        }
+        return this;
+      } else {
+        return self.apply(thisArg, finalArgs);
+      }
+      return bound;
+    };
+  };
+</script> -->
