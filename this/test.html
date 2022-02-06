@@ -1,0 +1,150 @@
+<!-- <script>
+  var me = {
+    stringName: "qingsds",
+    hello: function () {
+      console.log(`hello,I am ${this.stringName}`);
+    },
+  };
+
+  var you = {
+    stringName: "dou",
+    hello: me.hello,
+  };
+
+  var stringName = "xiaopeng";
+  var hello = me.hello;
+
+  // 调用位置
+  me.hello(); //hello,I am qingsds
+  you.hello(); //hello,I am dou
+  hello(); //hello,I am xiaopeng
+</script>
+
+<script>
+  var me = {
+    name:'qingsds',
+    hello:function(){
+      console.log(`hello, I am ${this.name}`);
+    }
+  }
+
+  var you = {
+    name:'xiaopeng',
+    hello:function(){
+      targetFunc = me.hello;
+      targetFunc();
+    }
+  }
+
+  var name = 'dou';
+  you.hello() //hello, I am dou
+</script>
+ -->
+<!-- <script>
+  var name = 'focus';
+
+  var me = {
+    name:'qingsds',
+    // 声明位置
+    sayHello:function(){
+      console.log(`hi, i am ${this.name}`);
+    },
+    hello:function(){
+      (function(callback){
+        // 调用位置
+        callback()
+      })(this.sayHello)
+    }
+  }
+
+  me.hello() //hi, i am focus
+</script> -->
+
+<!-- <script>
+  var name = "window";
+  var me = {
+    name: "qingsds",
+    hello: function () {
+      setTimeout(function () {
+        console.log(`hi, i am ${this.name}`);
+      });
+    },
+  };
+  me.hello() //hi, i am window
+</script> -->
+
+<!-- <script>
+  function showThis() {
+    console.log(this);
+  }
+  showThis(); //输出window对象
+</script>
+
+<script>
+  'use strict'
+  function showThis() {
+    console.log(this);
+  }
+  showThis(); //undefined
+</script> -->
+
+<!-- <script>
+  "use strict";
+  var name = "window";
+  var me = {
+    name: "qingsds",
+    hello: function () {
+      setTimeout(function () {
+        console.log(`hi, i am ${this.name}`);
+      });
+    },
+  };
+  me.hello();//hi, i am window
+</script> -->
+
+<!-- <script>
+  var name = "window";
+  if (true) {
+    let name = "A";
+    let A = {
+      sayHello: () => {
+        console.log(this.name);
+      },
+    };
+    A.sayHello();
+  }
+</script> -->
+
+<!-- <script>
+  var name = "window";
+  var me = {
+    name: "qingsds",
+    hello: () => {
+      console.log(this.name);
+    },
+  };
+  me.hello(); //window
+</script>
+ -->
+
+<script>
+  var name = 'window';
+
+  var A = {
+     name: 'A',
+     sayHello: function(){
+        var s = () => console.log(this.name)
+        return s//返回箭头函数s
+     }
+  }
+
+  var sayHello = A.sayHello();
+  sayHello();// 输出A
+
+  var B = {
+     name: 'B',
+  }
+
+  sayHello.call(B); //还是A
+  sayHello.call(); //还是A
+</script>
