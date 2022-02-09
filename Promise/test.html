@@ -1,0 +1,14 @@
+<script>
+  async function async1() {
+    await async2();
+    console.log("async1");
+    return "async1 success";
+  }
+  async function async2() {
+    return new Promise((resolve, reject) => {
+      console.log("只会输出这一句");
+      reject("结束运行 抛出这个错误");
+    });
+  }
+  async1().then((res) => console.log(res));
+</script>
