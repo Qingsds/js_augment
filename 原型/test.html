@@ -1,0 +1,96 @@
+<script>
+  var A = function () {};
+  A.prototype.n = 1;
+  console.log(A.prototype);
+  var b = new A();
+  console.log(b);
+  A.prototype = {
+    n: 2,
+    m: 3,
+  };
+  console.log(A.prototype);
+  var c = new A();
+
+  console.log(b.n);
+  console.log(b.m);
+  console.log(c.n);
+  console.log(c.m);
+</script>
+
+<script>
+  function A() {
+    this.name = "a";
+    this.color = ["yellow", "green"];
+  }
+  function B() {}
+  B.prototype = new A();
+  var b1 = new B();
+  var b2 = new B();
+
+  b1.name = "change";
+  b1.color.push("black");
+
+  console.log(b2.name);
+  console.log(b2.color);
+</script>
+
+<script>
+  function A() {}
+  function B(a) {
+    this.a = a;
+  }
+  function C(a) {
+    if (a) {
+      this.a = a;
+    }
+  }
+
+  A.prototype.a = 1;
+  B.prototype.a = 1;
+  C.prototype.a = 1;
+
+  console.log(new A().a);
+  console.log(new B().a);
+  console.log(new C(2).a);
+</script>
+
+<script>
+  function myNew(constructFn) {
+    // 1.判断类型
+    if (typeof constructFn !== "function") {
+      throw new TypeError(constructFn + "is not a function");
+    }
+    // 2. 模仿es6 new方法的target属性指向构造函数
+    myNew.target = constructFn;
+    // 3. 创建对象,进行原型链接
+    let newObject = Object.create(constructFn.prototype);
+    // 4. 获取参数;
+    let args = [].slice.call(arguments, 1);
+    // 5. 计算返回结果
+    let result = constructFn.apply(newObject, args);
+    // 6. 判断结果
+    const isObject = typeof result === "object" && result !== null;
+    const isFunc = typeof result === "function";
+    // 7. 如果结果是对象或者函数,直接返回结果
+    if (isFunc || isObject) {
+      return result;
+    }
+    // 8. 否则返回新对象
+    return newObject;
+  }
+</script>
+
+<script>
+  // 模拟Object.create方法
+  function objectCreate(o) {
+    function F() {}
+    F.prototype = o;
+    return F();
+  }
+
+  function myExtends(Child, Parent) {
+    const clonePrototype = objectCreate(Parent.prototype);
+    clonePrototype.constructor = Child;
+    Child.prototype = clonePrototype;
+  }
+</script>
