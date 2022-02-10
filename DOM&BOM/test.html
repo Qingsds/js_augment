@@ -1,0 +1,49 @@
+<script>
+  function myBrowser() {
+    return navigator.userAgent; //获得浏览器字符串
+  }
+  console.log(navigator.userAgent); //Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/98.0.4758.80 Safari/537.36
+</script>
+
+<script>
+  function throttle(func, interval) {
+    // last 为上次触发回调的时间
+    let last = 0;
+    // 将throttle 处理结果当做函数返回
+    return function () {
+      // 保留this
+      let context = this;
+      // 获取参数
+      let args = arguments
+      // 记录本次回调触发的时间
+      let now = +new Date();
+      // 断上次触发的时间和本次触发的时间差是否小于时间间隔的阈值
+      if (now - last >= interval) {
+        func.apply(context, args);
+        //如果时间间隔大于我们设定的时间间隔阈值,则执行回调
+        last = now;
+      }
+    };
+  }
+</script>
+
+<script>
+  function debounce(func, time) {
+    // 定时器
+    let timer = null;
+    return function () {
+      // 保留this
+      let context = this;
+      // 保留调用时传入的参数
+      let args = arguments
+      // 每次时间触发时,清除旧的定时器
+      if (timer) {
+        clearTimeout(timer);
+      }
+      // 建立新的定时器
+      timer = setTimeout(function () {
+        func.apply(context, args);
+      }, time);
+    };
+  }
+</script>
