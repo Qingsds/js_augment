@@ -1,0 +1,22 @@
+<script>
+  function jsonp({ rul, params, callback }) {
+    return new Promise((res, rej) => {
+      // 声明一个script 标签
+      let script = document.createElement("script");
+      window[callback] = function (data) {
+        res(data);
+        document.body.removeChild(script);
+      };
+      // 将参数合并
+      params = { ...params, callback };
+      let arrArg = [];
+      // 将参数设置成key=value的形式
+      for (let key in params) {
+        arrArg.push(`${key}=${params[key]}`);
+      }
+      // 设置url拼接参数
+      script.src = `${url}?${arrArg.join("&")}`;
+      document.body.appendChild(script);
+    });
+  }
+</script>
