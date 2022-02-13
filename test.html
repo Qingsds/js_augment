@@ -1,0 +1,35 @@
+<!-- <script>
+  function wait() {
+    return new Promise((res) => setTimeout(res, 10 * 1000));
+  }
+  async function main() {
+    console.time();
+    await wait();
+    await wait();
+    await wait();
+    console.timeEnd();
+  }
+  main(); // 30s多一点 
+</script> -->
+
+<!-- <script>
+  function wait() {
+    return new Promise((res) => setTimeout(res, 10 * 1000));
+  }
+  async function main() {
+    console.time();
+    // 下面三行 同步代码
+    const x = wait();
+    const y = wait();
+    const z = wait();
+    await x;
+    await y;
+    await z;
+    console.timeEnd();
+  }
+  main(); //10850.631103515625 ms
+</script> -->
+
+<script>
+  
+</script>
