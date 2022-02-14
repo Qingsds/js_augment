@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      #modal {
+        height: 300px;
+        width: 300px;
+        line-height: 300px;
+        position: fixed;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        border: 1px solid red;
+        text-align: center;
+      }
+    </style>
+  </head>
+  <body>
+    <button id="open">打开</button>
+    <button id="close">关闭</button>
+  </body>
+  <script>
+    // 点击展示模态框
+    document.getElementById("open").addEventListener("click", function () {
+      // 未点击则不创建modal实例，避免不必要的内存占用;此处不用 new Modal 的形式调用也可以
+      const modal = createModal();
+      modal.style.display = "block";
+    });
+    // 点击关闭模态框消失
+    document.getElementById("close").addEventListener("click", function () {
+      const modal = createModal();
+      if (modal) {
+        modal.style.display = "none";
+      }
+    });
+    // 核心逻辑 用闭包实现单例模式
+    const createModal = (function () {
+      let modal = null;
+      return function () {
+        if (!modal) {
+          modal = document.createElement("div");
+          modal.innerHTML = "Modal 全局唯一";
+          modal.id = "modal";
+          modal.style.display = "none";
+          document.body.append(modal);
+        }
+        return modal;
+      };
+    })();
+  </script>
+</html>

@@ -1,0 +1,44 @@
+<script>
+  class EventEmitter {
+    // handlers是一个map，用于存储事件与回调之间的对应关系
+    constructor() {
+      this.handlers = {};
+    }
+    //on方法用于安装事件监听器，它接受目标事件名和回调函数作为参数
+    on(eventName, callback) {
+      if (!this.handlers[eventName]) {
+        // 先检查一下目标事件名有没有对应的监听函数队列 如果没有，那么首先初始化一个监听函数队列
+        this.handlers[eventName] = [];
+      }
+      // 把回调函数推入目标事件的监听函数队列里去
+      this.handlers[eventName].push(callback);
+    }
+    // emit方法用于触发目标事件，它接受事件名和监听函数入参作为参数
+    emit(eventName, ...args) {
+      if (this.handlers[eventName]) {
+        // 检查目标事件是否有监听函数队列 如果有，则逐个调用队列里的回调函数
+        this.handlers[eventName].forEach((callback) => {
+          callback(...args);
+        });
+      }
+    }
+    off(eventName, callback) {
+      if (this.handlers[eventName]) {
+        const evts = this.handlers[eventName];
+        evts.splice(evts.indexOf(callback), 1);
+      }
+    }
+  }
+
+  const e = new EventEmitter();
+  const hi = function(){
+    console.log('hi');
+  }
+  const bye = function(){
+    console.log('bye')
+  }
+  e.on('hi',hi);
+  e.on('hi',bye);
+  e.off('hi',hi);
+  e.emit('hi')
+</script>
