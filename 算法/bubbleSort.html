@@ -1,0 +1,20 @@
+<script>
+  function bubbleSort(arr) {
+    const len = arr.length;
+    // 外层循环，n个元素就要循环n次，每次确定的是索引为 len-1-i 这个坑位上的正确元素值
+    for (let i = 0; i < len; i++) {
+      //  内层循环，逐个对比相邻两个数的大小
+      for (let j = 0; j < len - 1 - i; j++) {
+        // 如果靠前的数字大于靠后的数字，则交换两者的位置
+        if (arr[j] > arr[j + 1]) {
+          const temp = arr[j];
+          arr[j] = arr[j + 1];
+          arr[j + 1] = temp;
+          /* es6写法 */
+          // [arr[j], arr[j + 1]] = [arr[j + 1], arr[j]];
+        }
+      }
+    }
+    return arr;
+  }
+</script>

@@ -1,0 +1,24 @@
+<script>
+  function selectSort(arr) {
+    const len = arr.length;
+    // 定义 minIndex，缓存当前区间最小值的索引
+    let minIndex;
+    // 遍历数组中的前 n-1 个元素
+    for (let i = 0; i < len - 1; i++) {
+      // 初始化 minIndex 为当前区间第一个元素
+      minIndex = i;
+      for (let j = i; j < len; j++) {
+        // i、j分别定义当前区间的上下界，i是左边界，j是右边界
+        if (arr[j] < arr[minIndex]) {
+          // 若 j 处的数据项比当前最小值还要小，则更新最小值索引为 j
+          minIndex = j;
+        }
+      }
+      // 如果 minIndex 发生过更新，则将 minIndex 置于当前排序区间的头部
+      if (minIndex !== i) {
+        [arr[i], arr[minIndex]] = [arr[minIndex], arr[i]];
+      }
+    }
+    return arr;
+  }
+</script>

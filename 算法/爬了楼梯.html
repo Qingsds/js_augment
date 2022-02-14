@@ -1,0 +1,30 @@
+<script>
+  /* 自上而下解法 */
+  let f = [];
+  function climbStairs(n) {
+    // 处理边界条件
+    if (n === 1) {
+      return 1;
+    }
+    if (n === 2) {
+      return 2;
+    }
+    if (f[n] === undefined) f[n] = climbStairs(n - 1) + climbStairs(n - 2);
+    return f[n];
+  }
+
+  console.log(climbStairs(8));
+</script>
+
+<script>
+  /* 自下而上解法 */
+  function climbStairs1(n) {
+    const f = [];
+    f[1] = 1;
+    f[2] = 2;
+    for (let i = 3; i <= n; i++) {
+      f[i] = f[i - 1] + f[i - 2];
+    }
+    return f[n];
+  }
+</script>
