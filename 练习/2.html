@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      document.body.style.background = "blue";
+      Promise.resolve().then(() => {
+        document.body.style.background = "black";
+      });
+      /* background will be black do not be blue
+        因为根据 Event Loop 模型，浏览器在执行第一个宏任务—主干代码时，遇到了微任务—Promise 回调函数。
+        所以宏任务结束时，浏览器不会立即执行下一个宏任务—UI rendering，
+        而是立即执行微任务队列，也就是 Promise 的回调函数。当微任务队列被清空后，才会去执行 UI rendering。
+      */
+    </script>
+  </body>
+</html>
